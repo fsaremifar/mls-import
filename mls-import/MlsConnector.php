@@ -140,7 +140,7 @@ class MlsConnector
     }
     protected function SetImages($p)
     {
-        $images = $this->rets->GetObject("Property", "Photo",
+        $images = $this->rets->GetObject("Property", "HiRes",
         $p->Key,["*"],1);
          
         
@@ -163,9 +163,7 @@ class MlsConnector
              
             $this->Configuration=$cfg->Load();
             
-            writelog(' Configuration :'.json_encode($this->Configuration));
-           
-            $this->config = new \PHRETS\Configuration;
+             $this->config = new \PHRETS\Configuration;
             
        
 

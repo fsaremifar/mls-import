@@ -181,6 +181,7 @@ class MlsListing
         "REAL_HOMES_property_old_price"=>$this->OriginalListPrice,
     
         "REAL_HOMES_agents"=>54,
+        "REAL_HOMES_agents"=>57,
         "REAL_HOMES_property_location"=> $this->Lat.','. $this->Lon,
         "REAL_HOMES_featured"=>"0",
         "REAL_HOMES_property_year_built"=> $this->YearBuilt,
