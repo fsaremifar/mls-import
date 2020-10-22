@@ -102,7 +102,7 @@ function importIt()
 
 	writelog('Removing '. count($posts) . ' Properties from WP');
 
-	RemovePosts($posts); 
+	if(count(properties)>0)RemovePosts($posts); 
 	$mls->Logout();
 	
 }
@@ -120,7 +120,7 @@ function RemovePosts($posts)
 
 		// Remove the post
 		if($post==null)continue;
-		wp_delete_post( $post['ID'], true);
+		wp_delete_post( $post->ID, true);
 	}
 
 }
