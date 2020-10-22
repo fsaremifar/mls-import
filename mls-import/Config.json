@@ -1,7 +1,7 @@
 {
-    "Username":"",
-    "Password":"",
-    "LoginUrl":"http://retsgw.flexmls.com/rets2_3/Login",
-    "Query":"(LIST_15=15614ASF9O39)",
-    "Classes":"A,B,D"
+    "username":"",
+    "password":"",
+    "loginUrl":"http://retsgw.flexmls.com/rets2_3/Login",
+    "query":"(LIST_15=15614ASF9O39)",
+    "classes":"A,B,D"
 }

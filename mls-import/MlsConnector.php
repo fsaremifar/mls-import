@@ -36,15 +36,15 @@ abstract class JsonDeserializer
 class MlsConfig extends JsonDeserializer
 {
     /** @var string */
-    public $Username;
+    public $username;
     /** @var string */
-    public $Password;
+    public $password;
     /** @var string */
-    public $LoginUrl;
+    public $loginUrl;
     /** @var string */
-    public $Query;
-    /** @var array */
-    public $Classes;
+    public $query;
+    /** @var string */
+    public $classes;
     public function __construct()
     {
         
@@ -69,6 +69,8 @@ class MlsConnector
     protected $connection;
     protected $Configuration;
 
+    protected $Classes;
+    protected $Query;
     
     	 
     public function __construct()
@@ -96,7 +98,7 @@ class MlsConnector
                 [
                     'QueryType' => 'DMQL2',
                     'Count' => 0, // count and records 
-                    'Limit' => 500, 
+                    'Limit' => 700, 
                     'StandardNames' =>0, // give system names
                     'RestrictedIndicator'=>'****',   
                 ]
@@ -129,7 +131,7 @@ class MlsConnector
     }
     protected function SetImages($p)
     {
-        $images = $this->rets->GetObject("Property", "HiRes",
+        $images = $this->rets->GetObject("Property", "Photo",
         $p->Key,["*"],1);
          
         
@@ -148,18 +150,18 @@ class MlsConnector
         {
  
             $cfg=new MlsConfig;
-            
+
             $config=$cfg->Load();
             $this->Configuration=$config;
-            $this->Query=$config->Query;
-            $this->Classes=explode(',',$config->Classes);
+            $this->Query=$config->query;
+            $this->Classes=explode(',',$config->classes);
             $this->config = new \PHRETS\Configuration;
             
        
 
-            $this->config->setLoginUrl($config->LoginUrl)
-                ->setUsername($config->Username)
-                ->setPassword($config->Password)
+            $this->config->setLoginUrl($config->loginUrl)
+                ->setUsername($config->username)
+                ->setPassword($config->password)
                 ->setHttpAuthenticationMethod('basic')
                 ->setOption('disable_follow_location', false);
         }
@@ -175,7 +177,7 @@ class MlsConnector
         if($this->connection==null)//check if rejected..
 
         {
-            writelog('Logging in to MLS with User'. $this->Configuration->Username);
+            writelog('Logging in to MLS with User'. $this->Configuration->username);
             $this->connection = $this->rets->Login();
         }
     }
@@ -184,7 +186,7 @@ class MlsConnector
         if($this->rets!=null)//check if rejected..
 
         {
-            writelog('Logging out '. $this->Configuration->Username);
+            writelog('Logging out '. $this->Configuration->username);
 
             $this->rets->Disconnect();
         }
