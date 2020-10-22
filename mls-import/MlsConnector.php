@@ -67,10 +67,9 @@ class MlsConnector
     protected $config;
     protected $rets;
     protected $connection;
+     /** @var MlsConfig */
     protected $Configuration;
-
-    protected $Classes;
-    protected $Query;
+ 
     
     	 
     public function __construct()
@@ -86,6 +85,8 @@ class MlsConnector
         $this->Login();
         $result=[];
         $resource='Property'; 
+        $classes=explode(',',$config->classes);
+
         foreach ($this->Classes as $class) {
             
            
@@ -94,7 +95,7 @@ class MlsConnector
             $retResults = $this->rets->Search(
                 $resource,
                 $class,
-                $this->Query,
+                $this->Configuration->query,
                 [
                     'QueryType' => 'DMQL2',
                     'Count' => 0, // count and records 
@@ -151,17 +152,18 @@ class MlsConnector
  
             $cfg=new MlsConfig;
 
-            $config=$cfg->Load();
-            $this->Configuration=$config;
-            $this->Query=$config->query;
-            $this->Classes=explode(',',$config->classes);
+             
+            $this->Configuration=$cfg->Load();
+            
+            writelog(' Configuration :'.json_encode($this->Configuration));
+           
             $this->config = new \PHRETS\Configuration;
             
        
 
-            $this->config->setLoginUrl($config->loginUrl)
-                ->setUsername($config->username)
-                ->setPassword($config->password)
+            $this->config->setLoginUrl($this->Configuration->loginUrl)
+                ->setUsername($this->Configuration->username)
+                ->setPassword($this->Configuration->password)
                 ->setHttpAuthenticationMethod('basic')
                 ->setOption('disable_follow_location', false);
         }
