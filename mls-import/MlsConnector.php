@@ -63,7 +63,7 @@ class MlsConfig extends JsonDeserializer
 
         //$result = MlsConfig::Deserialize($json);
         $this->loginUrl= stripslashes($this->loginUrl);
-        
+
         return $this;
     }
 }
@@ -92,9 +92,9 @@ class MlsConnector
         $this->Login();
         $result=[];
         $resource='Property'; 
-        $classes=explode(',',$config->classes);
+        $clss=explode(',',$this->Configuration->classes);
 
-        foreach ($this->Classes as $class) {
+        foreach ($clss as $class) {
             
            
             writelog('Querying properties  Class:'. $class .' Query :'.$query);
