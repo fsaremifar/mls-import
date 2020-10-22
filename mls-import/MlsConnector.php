@@ -14,7 +14,7 @@ class MlsConfig
 
     }
     public function Load() {
-        $file='config.json';
+        $file='wp-content/plugins/mls-import/config.json';
 		$json = file_get_contents ($file); 
         $data = json_decode($json, true);
         foreach ($data AS $key => $value) $this->{$key} = $value;
