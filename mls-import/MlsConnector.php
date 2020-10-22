@@ -1,11 +1,50 @@
 <?php
-class MlsConfig  
+abstract class JsonDeserializer
 {
-    public $Username="";
-    public $Password="";
-    public $LoginUrl="";
-    public $Query=""; 
-    public $Classes=array();
+    /**
+     * @param string|array $json
+     * @return $this
+     */
+    public static function Deserialize($json)
+    {
+        $className = get_called_class();
+        $classInstance = new $className();
+        if (is_string($json))
+            $json = json_decode($json);
+
+        foreach ($json as $key => $value) {
+            if (!property_exists($classInstance, $key)) continue;
+
+            $classInstance->{$key} = $value;
+        }
+
+        return $classInstance;
+    }
+    /**
+     * @param string $json
+     * @return $this[]
+     */
+    public static function DeserializeArray($json)
+    {
+        $json = json_decode($json);
+        $items = [];
+        foreach ($json as $item)
+            $items[] = self::Deserialize($item);
+        return $items;
+    }
+}
+class MlsConfig extends JsonDeserializer
+{
+    /** @var string */
+    public $Username;
+    /** @var string */
+    public $Password;
+    /** @var string */
+    public $LoginUrl;
+    /** @var string */
+    public $Query;
+    /** @var array */
+    public $Classes;
     public function __construct()
     {
         
@@ -14,10 +53,11 @@ class MlsConfig
 
     }
     public function Load() {
+       
         $file='wp-content/plugins/mls-import/config.json';
-		$json = file_get_contents ($file); 
-        $data = json_decode($json, true);
-        foreach ($data AS $key => $value) $this->{$key} = $value;
+        $json = file_get_contents($file); 
+        $result = MlsConfig::Deserialize($json);
+        return result;
     }
 }
 
@@ -107,8 +147,9 @@ class MlsConnector
         if($this->config==null)
         {
  
-            $config=new MlsConfig;
-            $config->Load();
+            $cfg=new MlsConfig;
+            
+            $config=$cfg->Load();
             $this->Configuration=$config;
             $this->Query=$config->Query;
             $this->Classes=explode(',',$config->Classes);
