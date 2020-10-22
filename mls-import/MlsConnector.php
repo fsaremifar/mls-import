@@ -94,15 +94,16 @@ class MlsConnector
         $resource='Property'; 
         $clss=explode(',',$this->Configuration->classes);
 
+        $qr=$this->Configuration->query;
         foreach ($clss as $class) {
             
            
-            writelog('Querying properties  Class:'. $class .' Query :'.$query);
+            writelog('Querying properties  Class:'. $class .' Query :'.$qr);
 
             $retResults = $this->rets->Search(
                 $resource,
                 $class,
-                $this->Configuration->query,
+                $qr,
                 [
                     'QueryType' => 'DMQL2',
                     'Count' => 0, // count and records 
