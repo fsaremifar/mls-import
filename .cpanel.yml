@@ -1,5 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/lintlnww/public_html/wp-content/plugins/mls-import
+    - export DEPLOYPATH=/home/lintlnww/public_html/wp-content/plugins/
     - /bin/cp -R mls-import $DEPLOYPATH
