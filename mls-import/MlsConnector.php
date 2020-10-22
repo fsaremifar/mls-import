@@ -57,7 +57,7 @@ class MlsConfig extends JsonDeserializer
         $file='wp-content/plugins/mls-import/config.json';
         $json = file_get_contents($file); 
         $result = MlsConfig::Deserialize($json);
-        return result;
+        return $result;
     }
 }
 
