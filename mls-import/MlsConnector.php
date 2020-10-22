@@ -62,6 +62,8 @@ class MlsConfig extends JsonDeserializer
         foreach ($data AS $key => $value) $this->{$key} = $value;
 
         //$result = MlsConfig::Deserialize($json);
+        $this->loginUrl= stripslashes($this->loginUrl);
+        
         return $this;
     }
 }
